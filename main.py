@@ -13,6 +13,7 @@ api_key = os.environ.get('YT_KEY')
 youtube = build('youtube', 'v3', developerKey=api_key)
 
 def main():
+    ############# Think about file structure
 
     watchHistory_json = 'C:\\Users\\danie\\Desktop\\CS-Projects\\YouTube_Screentime\\Takeout\\YouTube and YouTube Music\\history\\watch-history.json'
     watchHistory_df = pd.read_json(watchHistory_json) 
@@ -38,6 +39,7 @@ def main():
 
 
 
+    ############# Break out into seperate file or function
 
     df = df[:217]  # sample size, to save quota 
     videos_ID = df['videoID']
