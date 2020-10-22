@@ -20,3 +20,4 @@ Features in progress
 - In hovermode or dataframe, display:
   - top channels within categories
   - thumbnails 
+  - video metrics
