@@ -6,20 +6,26 @@
 
 import sqlite3
 import pandas as pd
+import plotly.express as px
 
-def load_data(db_filename,table_name):
-    """
-    Load data from database
-    """
-    conn = sqlite3.connect(db_filename) 
-    table_name = 'VIDEOS'
-    df = pd.read_sql(f"select * from {table_name}", con=conn)
-    return df 
 
-def plot_data(db_filename,table_name):
+def plot_data(df):
     """
     Create plotly chart(s)
     """
-    df = load_data(db_filename,table_name)
-    print(df.head())
+        
+    grouped_df = pd.DataFrame(df.groupby(['dayName', 'categoryName']).count()).reset_index()
+    grouped_df = grouped_df.iloc[:, 0:3].rename(columns={"videoID": "count"})
+
+    fig = px.bar(grouped_df, x="dayName", color="categoryName",
+                y='count',
+                title="YouTube Videos Watched per Category",
+                barmode='stack',
+                height=1000,
+                #  category_orders={"dayName": ["Thur", "Fri", "Sat", "Sun"]}
+                )
+
+    fig.update_layout(xaxis={"title": "Day"},yaxis={'title':"# of Videos Watched"})
+    fig.update_xaxes(categoryorder='array',categoryarray= ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'])
+    fig.show()
     
