@@ -26,6 +26,8 @@ Plotly:
 - In hovermode or dataframe, display:
   - top channels within categories
   - video metrics (datetime, hyperlink)
+  
+ - Heatmap like leetcode and github, might be interesting to see spike in activty pre/post covid
  
  Dash:
  Web app to display/interact
