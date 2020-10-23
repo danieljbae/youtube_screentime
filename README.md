@@ -18,15 +18,14 @@ Watch history over the past 2000 videos I've watched
 
 
 
-Features in progress
-- Drill down plot for hourly data within days (showing trends within the day) 
-- Additional Filters: 
-  - Month
-  - Time Range (ex. Last week, Last 2 weeks, etc.)
-- Web app to display/interact
+#### Features in progress
+
+Plotly:
+- Drill down plot hourly data of a day (showing trends within the day) >> Check boxes for days 
+- Time Range >> Double ended slider Big ticks are months, Small ticks are weeks
 - In hovermode or dataframe, display:
   - top channels within categories
-  - thumbnails 
-  - video metrics
-  
-- Other charts like (ex. Pie chart)
+  - video metrics (datetime, hyperlink)
+ 
+ Dash:
+ Web app to display/interact
