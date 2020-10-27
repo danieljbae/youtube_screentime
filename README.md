@@ -2,7 +2,7 @@
 
 With this project I aimed to answer 2 questions: 
 - What type of videos do I watch? 
-- When do I watch said categories? 
+- When do I watch these categories? 
 
 Inspired by iPhone's screentime and the recent documentary "The Social Dilemna", which underscores the increase in technology usage.
 
