@@ -4,7 +4,7 @@ With this project I aimed to answer 2 questions:
 - What type of videos do I watch? 
 - When do I watch said categories? 
 
-Inspired by iPhone's screentime and the recent documentary "The Social Dilemna", which underscores the rapid increase of in technology usage.
+Inspired by iPhone's screentime and the recent documentary "The Social Dilemna", which underscores the increase in technology usage.
 
 ## Demo
 My watch history during the week of 10-4-2020 
