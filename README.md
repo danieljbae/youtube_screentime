@@ -4,7 +4,7 @@ With this project I aimed to answer 2 questions:
 - What type of videos do I watch? 
 - When do I watch these categories? 
 
-Inspired by iPhone's screentime and the recent documentary "The Social Dilemna", which underscores the increase in technology usage.
+Inspired by iPhone's screentime and the recent documentary "The Social Dilemna", which underscores the increase in technology usage. This web dashboard serves a drill down perspective, to examine usage within a given application (i.e. YouTube).
 
 ## Demo
 My watch history during the week of 10-4-2020 
