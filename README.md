@@ -13,7 +13,7 @@ My watch history during the week of 10-4-2020
 
 
 ### Disclaimer
-I would have preferred to plot "watch time" of each video on the Y-Axis, rather than video watched (clicked). As this would have more accurately represented how much time was spent on each category. 
+I would have preferred to plot "watch time" of videos on the Y-Axis, rather than # videos watched (clicked). As this would have more accurately represented how much time was spent on each category. 
 
 However, these properties and other drill down categories (i.e. watch history & watch time, and video topics) have been [deprecated](https://developers.google.com/youtube/v3/revision_history#august-11,-2016)
 
