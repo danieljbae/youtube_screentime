@@ -1,6 +1,6 @@
 import pandas as pd
 import dateutil.parser
-from datetime import datetime, timezone
+from datetime import datetime, timezone, date
 import video_data
 import displayData
 
@@ -32,8 +32,11 @@ def format_takeout(watchHistory_df):
     df['month'] = [dt.strftime("%b") for dt in df['datetime']]  
     df['dayNum'] = [dt.strftime("%d") for dt in df['datetime']] 
     df['year'] = [dt.year for dt in df['datetime']] 
-    
-    print("Size after reading/cleaning from Takeout: ",len(df['videoID']))
+
+    df['weekNumber'] = [dt.isocalendar()[1] for dt in df['datetime']]
+    df['day'] = [dt.strftime('%m-%d-%Y') for dt in df['datetime']]
+
+    # print("Size after reading/cleaning from Takeout: ",len(df['videoID']))
     return df 
 
 
@@ -54,14 +57,14 @@ def main():
     # # Store data in .db file
     # video_data.store_data(db_filename,table_name,df)
 
-    ##########################
+    #########################
     #  Stopping point: 
-    ##########################
+    #########################
     ### Now plot data and think about how you wanna plot it
     df = video_data.load_data(db_filename,table_name)
     
     
-    df = df[:2000] # sample set
+    df = df[:5000] # sample set
     displayData.plot_data(df)
 
 

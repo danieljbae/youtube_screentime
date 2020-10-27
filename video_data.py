@@ -4,9 +4,9 @@ from googleapiclient.discovery import build
 import os
 import categorieshashmap
 
-category_map = categorieshashmap.youtube_video_categories()
-api_key = os.environ.get('YT_KEY')
-youtube = build('youtube', 'v3', developerKey=api_key)
+# category_map = categorieshashmap.youtube_video_categories()
+# api_key = os.environ.get('YT_KEY')
+# youtube = build('youtube', 'v3', developerKey=api_key)
 
 
 def load_data(db_filename,table_name):
@@ -41,7 +41,9 @@ def store_data(db_filename,table_name,df):
                     month text,
                     views INTEGER,
                     categoryID text,
-                    categoryName blob
+                    categoryName blob,
+                    weekNumber INTEGER,
+                    day blob
                 )"""                                
                 )
 
@@ -53,10 +55,7 @@ def store_data(db_filename,table_name,df):
 def get_data(df):
     """
     Fetch data from YouTube (ex. Video Category) and add to Df
-    """
-
-    df = df[:1512]  # sample size, to save quota (just comment out this line for full set)
-    
+    """   
 
     videos_ID = df['videoID']
     vidViews = []
@@ -107,9 +106,12 @@ def get_data(df):
     vidViews.append(-1)
     vidViews.append(-1)
     vidViews.append(-1)
+    vidViews.append(-1)
     categoryID.append(-1)
     categoryID.append(-1)
     categoryID.append(-1)
+    categoryID.append(-1)
+    categoryName.append("None")
     categoryName.append("None")
     categoryName.append("None")
     categoryName.append("None")
