@@ -12,12 +12,19 @@ My watch history during the week of 10-4-2020
 ![Alt Text](./demo/screentime_demo_v2.gif)
 
 
+### Disclaimer
+I would have preferred to plot "watch time" of each video on the Y-Axis, rather than video watched (clicked). As this would have more accurately represented how much time was spent on each category. 
+
+However, these properties and other drill down categories (i.e. watch history & watch time, and video topics) have been [deprecated](https://developers.google.com/youtube/v3/revision_history#august-11,-2016)
+
+As a result, [Google's Takeout](https://takeout.google.com/settings/takeout) was used to obtain a list of videos I watched and when they were opened. 
+
 ## Getting started 
 
 ### Prerequisites
 1) Start Google project to generate API Key and choose [YouTube API service](https://console.developers.google.com/)
 
-2) Export your watch history in JSON format, using [Google's Takeout](https://takeout.google.com/settings/takeout) service
+2) Export your watch history in JSON format, using [Google's Takeout](https://takeout.google.com/settings/takeout) service (this may take a few minutes, you'll be emailed when your export is ready)
 
 ### Windows
 Install virtualenv to manage packages and create enviroment
@@ -72,3 +79,6 @@ Install packages:
 ### Sources and references:
 * getting started with Google APIs: https://github.com/googleapis/google-api-python-client
 * YouTube API v3 Documentation: https://developers.google.com/youtube/v3/docs?hl=en
+
+
+
