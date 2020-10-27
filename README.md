@@ -19,7 +19,7 @@ My watch history during the week of 10-4-2020
 
 2) Export your watch history in JSON format, using [Google's Takeout](https://takeout.google.com/settings/takeout) service
 
-#### Windows
+### Windows
 Install virtualenv to manage packages and create enviroment
 ```sh
 pip install virtualenv
@@ -45,7 +45,7 @@ pip install google-api-python-client
 
 
 
-#### Mac/Linux
+### Mac/Linux
 Install virtualenv to manage packages and create enviroment
 ```sh
 pip install virtualenv
