@@ -14,7 +14,7 @@ Currently working on a few features (See below)
 ## Demo
 Watch history over the past 2000 videos I've watched 
 
-![Alt Text](./demo/screentime_demo.gif)
+![Alt Text](./demo/screentime_demo_v2.gif)
 
 
 
