@@ -9,7 +9,7 @@ Inspired by iPhone's screentime and the recent documentary "The Social Dilemna",
 ## Demo
 My watch history during the week of 10-4-2020 
 
-![Alt Text](./demo/screentime_demo_v2.gif)
+![Alt Text](./demo/screentime_demo_v3.gif)
 
 
 ### Disclaimer
