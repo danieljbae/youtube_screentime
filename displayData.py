@@ -132,7 +132,7 @@ def plot_data(df):
             grouped_df = grouped_df.iloc[:, 0:3].rename(columns={"videoID": "count"})
             figWeek = px.bar(grouped_df, x="dayName", color="categoryName",
                         y='count',
-                        title=f"YouTube videos watched: This Week",
+                        title=f"Videos watched, during the Week of: {date_string} ",
                         barmode='stack',
                         height=700,
                         # color_discrete_map = category_color_map # consistent colors from daily to weekly graphs 
@@ -153,7 +153,7 @@ def plot_data(df):
             grouped_df = grouped_df.iloc[:, 0:3].rename(columns={"videoID": "count"})
             figDay = px.bar(grouped_df, x="hour_int", color="categoryName",
                         y='count',
-                        title="YouTube videos watched: Today",
+                        title=f"Videos watched, Today: {date_string}",
                         barmode='stack',
                         height=700, 
                         # color_discrete_map = category_color_map # consistent colors from daily to weekly graphs 
