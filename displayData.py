@@ -1,8 +1,10 @@
 import dash
 import dash_core_components as dcc
 import dash_html_components as html
-import plotly.graph_objs as go
 import plotly.express as px
+
+import plotly.graph_objs as go
+
 from datetime import date, datetime
 import sqlite3
 import pandas as pd
@@ -116,6 +118,8 @@ def plot_data(df):
         string_prefix = 'You have selected: '
         date_caption_prefix = "Videos watched during the week of: "
         if date_value is not None:
+
+            ### Display text
             date_object = date.fromisoformat(date_value)
             date_string = date_object.strftime('%B %d, %Y')
 
@@ -159,7 +163,7 @@ def plot_data(df):
             )
 
 
-            return figDay,figWeek,date_caption_prefix + date_string,string_prefix + date_string
+            return figDay, figWeek, date_caption_prefix + date_string, string_prefix + date_string
 
     if __name__ != '__main__':
         app.run_server(debug=True)
