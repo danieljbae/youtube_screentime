@@ -1,22 +1,18 @@
 import dash
 import dash_core_components as dcc
 import dash_html_components as html
-import plotly.graph_objs as go
 import plotly.express as px
 from datetime import date, datetime
 import sqlite3
 import pandas as pd
+import sys
+sys.path.insert(1, './resources')
+from app_colors import category_color_map
+from app_colors import colors
+
 
 external_stylesheets = ['https://codepen.io/chriddyp/pen/bWLwgP.css']
 app = dash.Dash(__name__, external_stylesheets=external_stylesheets)
-
-colors = {
-    'background': '#111111',
-    'text': '#7FDBFF',
-    "tab_border": "dimgrey",
-    "tab_primary": "dimgrey",
-    "tab_background": "darkgrey"
-    }
 
 
 def plot_data(df):
@@ -24,14 +20,18 @@ def plot_data(df):
     Create plotly chart(s)
     """
 
-    ### Adding columns to dataframe for callback functions to filter dateframe
+    ############ Move to video_data.py, once quota resets ####################################  
+    
+    # Adding columns to dataframe for callback functions to filter dateframe
     hours = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23]
     df['hour_int'] = [int(row) for row in df['hour']]
     cols = ['month', 'dayNum', 'year']
     df['day'] = df[cols].apply(lambda row: '-'.join(row.values.astype(str)), axis=1)
     df['date'] = [datetime.strptime(row, '%b-%d-%Y') for row in df['day']]
     df['weekNum'] = [row.isocalendar()[1] for row in df['date']] 
+    ############################################################################################
 
+    
 
     ##############################
     ### Dashboard
@@ -69,10 +69,10 @@ def plot_data(df):
         html.Div([
             dcc.DatePickerSingle(
                 id='my-date-picker-single',
-                min_date_allowed=date(2020, 9, 1),
-                max_date_allowed=date(2020, 10, 4),
-                initial_visible_month=date(2020, 8, 5),
-                date=date(2020, 9, 1)
+                min_date_allowed = min(df['date']).date(),
+                max_date_allowed=max(df['date']).date(),
+                initial_visible_month=max(df['date']).date(),
+                date=max(df['date']).date()
             ),
             html.Div(id='output-container-date-picker-single')
         ]),
@@ -129,7 +129,9 @@ def plot_data(df):
                         y='count',
                         title=f"YouTube videos watched: This Week",
                         barmode='stack',
-                        height=700
+                        height=700,
+                        # color_discrete_map = category_color_map # consistent colors from daily to weekly graphs 
+                        color_discrete_sequence= px.colors.sequential.thermal # cleaner
                         )
             figWeek.update_layout(xaxis={"title": "Day"},yaxis={'title':"# of Videos Watched"})
             figWeek.update_xaxes(categoryorder='array',categoryarray= ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'])
@@ -148,7 +150,9 @@ def plot_data(df):
                         y='count',
                         title="YouTube videos watched: Today",
                         barmode='stack',
-                        height=700  
+                        height=700, 
+                        # color_discrete_map = category_color_map # consistent colors from daily to weekly graphs 
+                        color_discrete_sequence= px.colors.sequential.thermal # cleaner  
                         )
             figDay.update_layout(xaxis={"title": "Hours"},yaxis={'title':"# of Videos Watched"})
             figDay.update_xaxes(categoryorder='array',categoryarray= hours,tickvals=[0, 6, 12, 18, 24])
