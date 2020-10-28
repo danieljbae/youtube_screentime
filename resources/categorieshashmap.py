@@ -34,5 +34,3 @@ def youtube_video_categories():
 
     return videos_categories
       
-
-# videos_categories = youtube_video_categories() 

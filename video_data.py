@@ -2,11 +2,42 @@ import pandas as pd
 import sqlite3
 from googleapiclient.discovery import build
 import os
+import sys
+sys.path.insert(1, './resources')
 import categorieshashmap
+import dateutil.parser
+from datetime import datetime, timezone, date
 
-# category_map = categorieshashmap.youtube_video_categories()
-# api_key = os.environ.get('YT_KEY')
-# youtube = build('youtube', 'v3', developerKey=api_key)
+def format_takeoutData(watchHistory_df):
+    """
+    Clean Google Takeout data (watch history) and return new dataframe
+    """
+    title_prefix = len("Watched ")
+    videoID_prefix = len("https://www.youtube.com/watch?v=")
+    channelID_prefix = len("https://www.youtube.com/channel/")
+    
+    # Clean Takeout data
+    watchHistory_df = watchHistory_df.dropna(subset=['subtitles'])
+    watchHistory_df = watchHistory_df[watchHistory_df['title'] != 'Visited YouTube Music'] 
+    watchHistory_df = watchHistory_df[watchHistory_df['title'] != 'Watched a video that has been removed'] 
+    
+    # Parsing data into new df
+    df = pd.DataFrame()
+    df['videoID']  = [item[videoID_prefix:] for item in watchHistory_df['titleUrl']]
+    df['videoName'] = [item[title_prefix:] for item in watchHistory_df['title']]
+    df['channelName']  = [item[0]['name'] for item in watchHistory_df['subtitles']]
+    df['channelID'] = [item[0]['url'][channelID_prefix:] for item in watchHistory_df['subtitles']]
+    df['datetime'] = [dateutil.parser.parse(item) for item in watchHistory_df['time']]
+    df['hour'] = [dt.strftime("%H") for dt in df['datetime']]
+    df['dayName'] = [dt.strftime("%a") for dt in df['datetime']] 
+    df['month'] = [dt.strftime("%b") for dt in df['datetime']]  
+    df['dayNum'] = [dt.strftime("%d") for dt in df['datetime']] 
+    df['year'] = [dt.year for dt in df['datetime']] 
+    df['weekNumber'] = [dt.isocalendar()[1] for dt in df['datetime']]
+    df['day'] = [dt.strftime('%m-%d-%Y') for dt in df['datetime']]
+
+    # print("Size after reading/cleaning from Takeout: ",len(df['videoID']))
+    return df 
 
 
 def load_data(db_filename,table_name):
@@ -17,6 +48,7 @@ def load_data(db_filename,table_name):
     table_name = 'VIDEOS'
     df = pd.read_sql(f"select * from {table_name}", con=conn)
     return df 
+
 
 def store_data(db_filename,table_name,df):
     """
@@ -48,14 +80,24 @@ def store_data(db_filename,table_name,df):
                 )
 
     conn.commit()
-
     # Insert to db
     df.to_sql('VIDEOS', conn, if_exists='replace', index = False)
+
 
 def get_data(df):
     """
     Fetch data from YouTube (ex. Video Category) and add to Df
     """   
+    
+    api_key = os.environ.get('YT_KEY')
+    
+    try:
+        youtube = build('youtube', 'v3', developerKey=api_key)
+        category_map = categorieshashmap.youtube_video_categories()
+        
+    except:
+        print("Quota exceeded")
+        pass
 
     videos_ID = df['videoID']
     vidViews = []
