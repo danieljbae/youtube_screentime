@@ -8,7 +8,7 @@ Inspired by iPhone's screentime and the recent documentary "The Social Dilemna",
 
 ## Demo
 
-![Alt Text](./demo/screentime_demo_v3.gif)
+![Alt Text](./demo/screentime_demo_v4.gif)
 
 
 ### Disclaimer
