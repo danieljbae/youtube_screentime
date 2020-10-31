@@ -12,11 +12,12 @@ import sys
 sys.path.insert(1, './resources')
 from app_colors import category_color_map
 from app_colors import colors
+import dash_bootstrap_components as dbc
+
 
 
 external_stylesheets = ['https://codepen.io/chriddyp/pen/bWLwgP.css']
 app = dash.Dash(__name__, external_stylesheets=external_stylesheets)
-
 
 def plot_data(df):
     """
@@ -82,24 +83,38 @@ def plot_data(df):
         
 
         #### Tab Component containing graphs
-        html.Div([
-            dcc.Tabs([
-                dcc.Tab(label='This Week', children=[
-                    dcc.Graph(
-                        id = 'weekly-graph'
-                    )
-                ]),
-                dcc.Tab(label='Today', children=[
-                    dcc.Graph(
-                        id = 'daily-graph'
-                    )
-                ]),
-            ],colors={
-                "border": colors["tab_border"],
-                "primary": colors["tab_primary"],
-                "background": colors["tab_background"]
-                })
+        html.Div(className = 'row', children= [
+        
+            # Bar charts 
+            html.Div(className = 'eight columns', children = [ 
+                dcc.Tabs([
+                    dcc.Tab(label='This Week', children=[
+                        dcc.Graph(
+                            id = 'weekly-graph'
+                        )
+                    ]),
+                    dcc.Tab(label='Today', children=[
+                        dcc.Graph(
+                            id = 'daily-graph'
+                        )
+                    ]),
+                ],colors={
+                    "border": colors["tab_border"],
+                    "primary": colors["tab_primary"],
+                    "background": colors["tab_background"]
+                    })
+            ]),
+
+            # Pie chart
+            html.Div(className = 'four columns', children = [ 
+                dcc.Graph(
+                    id = 'weekly-pie'
+                )
+
         ])
+
+
+    ])
     ])
 
 
@@ -108,6 +123,9 @@ def plot_data(df):
     ### Updating Graphs per input 
     ############################## 
     @app.callback(
+ 
+        dash.dependencies.Output('weekly-pie', 'figure'),
+
         dash.dependencies.Output('daily-graph', 'figure'),
         dash.dependencies.Output('weekly-graph', 'figure'),
         dash.dependencies.Output('date-caption', 'children'),
@@ -134,7 +152,7 @@ def plot_data(df):
                         y='count',
                         title=f"Videos watched, during the Week of: {date_string} ",
                         barmode='stack',
-                        height=700,
+                        height=800,
                         # color_discrete_map = category_color_map # consistent colors from daily to weekly graphs 
                         color_discrete_sequence= px.colors.sequential.thermal # cleaner
                         )
@@ -144,7 +162,22 @@ def plot_data(df):
                 plot_bgcolor=colors['background'],
                 paper_bgcolor=colors['background'],
                 font_color=colors['text']
-            ) 
+            )
+
+
+            ### Weekly Sunburst chart
+            grouped_df = pd.DataFrame(df_thisWeek.groupby(['dayName', 'categoryName','channelName']).count()).reset_index()
+            grouped_df = grouped_df.iloc[:, 0:4].rename(columns={"videoID": "count"})
+            pie_weekly = px.sunburst(grouped_df, path=['dayName', 'categoryName', 'channelName'], values='count', 
+                            maxdepth=2,
+                            height=800,
+                            )
+            pie_weekly.update_layout(
+                plot_bgcolor=colors['background'],
+                paper_bgcolor=colors['background'],
+                font_color=colors['text']
+            )
+                
 
             ### Daily Graph
             chosenDay = datetime.strptime(date_value, '%Y-%m-%d')
@@ -155,7 +188,7 @@ def plot_data(df):
                         y='count',
                         title=f"Videos watched, Today: {date_string}",
                         barmode='stack',
-                        height=700, 
+                        height=800, 
                         # color_discrete_map = category_color_map # consistent colors from daily to weekly graphs 
                         color_discrete_sequence= px.colors.sequential.thermal # cleaner  
                         )
@@ -167,8 +200,7 @@ def plot_data(df):
                 font_color=colors['text']
             )
 
-
-            return figDay, figWeek, date_caption_prefix + date_string, string_prefix + date_string
+            return pie_weekly, figDay, figWeek, date_caption_prefix + date_string, string_prefix + date_string
 
     if __name__ != '__main__':
         app.run_server(debug=True)
