@@ -40,16 +40,6 @@ Install packages:
 ```sh
 pip install google-api-python-client
 ```
-##### Additional dependencies
-
-* pip install plotly
-* pip install regex
-* pip install pandas
-* pip install dash
-* pip install datetime
-* pip install dateutil.parser
-
-
 
 ### Mac/Linux
 Install virtualenv to manage packages and create enviroment
@@ -66,7 +56,7 @@ Install packages:
 ```sh
 <your-env>/bin/pip install google-api-python-client
 ```
-##### Additional dependencies
+### Built with
 
 * pip install plotly
 * pip install regex
